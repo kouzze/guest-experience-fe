@@ -6,7 +6,7 @@ import jwt from 'jsonwebtoken';
 const privateRoutes = ['/protected'];
 const notAuthRoutes = ['/login', '/register']
 
-export const onRequest = defineMiddleware(async ({ url, request, redirect, cookies, locals }, next) => {
+export const onRequest = defineMiddleware(async ({ url, redirect, cookies, locals }, next) => {
   let token = cookies.get('token')?.value ?? '';
 
   verifyToken(token, locals);

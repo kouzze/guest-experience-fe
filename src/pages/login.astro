@@ -78,7 +78,7 @@ const rememberMe = !!email;
         btnSubmit.setAttribute('disabled', 'disabled');
 
         const formData = new FormData(form);
-        const { data, error } = await actions.loginUser(formData);
+        const { error } = await actions.loginUser(formData);
 
         if (error) {
           console.log(error);
