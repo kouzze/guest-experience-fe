@@ -1,5 +1,5 @@
 ---
-
+const { isLoggedIn } = Astro.locals;
 ---
 
 <header class="bg-white shadow-md p-4">
@@ -7,15 +7,67 @@
     <a href="/" class="text-gray-800 font-bold no-underline">Guest Experience</a
     >
     <div>
-      <a href="/propiedades" class="ml-4 text-gray-800 font-bold no-underline"
-        >Propiedades</a
-      >
-      <a href="/anfitriones" class="ml-4 text-gray-800 font-bold no-underline"
-        >Anfitriones</a
-      >
-      <a href="/reservas" class="ml-4 text-gray-800 font-bold no-underline"
-        >Reservas</a
-      >
+      <ul class="flex space-x-4">
+        <li>
+          <a href="/" class="text-gray-800 font-bold no-underline"> Inicio </a>
+        </li>
+        {
+          isLoggedIn && (
+          <li>
+            <a href="/#Propiedades" class="text-gray-800 font-bold no-underline">
+              Propiedades
+            </a>
+          </li>
+          <li>
+            <a href="/#Anfitriones" class="text-gray-800 font-bold no-underline">
+              Anfitriones
+            </a>
+          </li>
+          <li>
+            <a href="/#Reservas" class="text-gray-800 font-bold no-underline">
+              Reservas
+            </a>
+          </li>
+          <li>
+            <a href="/protected" class="text-gray-800 font-bold no-underline">
+              Protegido
+            </a>
+          </li>
+          )
+        }
+        {
+          !isLoggedIn ? (
+            <li>
+              <a
+                href="/login"
+                class="ml-4 text-gray-800 font-bold no-underline"
+              >
+                Login
+              </a>
+            </li>
+          ) : (
+            <li id="logout">
+              <a
+                href="#Salir"
+                class="ml-4 text-gray-800 font-bold no-underline"
+              >
+                Salir
+              </a>
+            </li>
+          )
+        }
+      </ul>
     </div>
   </nav>
 </header>
+
+<script>
+  import { actions } from 'astro:actions';
+
+  const logoutElem = document.querySelector('#logout') as HTMLElement;
+
+  logoutElem?.addEventListener('click', () => {
+    actions.logout();
+    window.location.href = '/';
+  });
+</script>
