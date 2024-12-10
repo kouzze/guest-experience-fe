@@ -1,4 +1,5 @@
 import { registerUser, loginUser, logout } from './auth';
+import { getProperties } from './properties';
 
 export const server = {
   //actions
@@ -6,5 +7,6 @@ export const server = {
   //Auth
   registerUser,
   loginUser,
-  logout
+  logout,
+  getProperties
 }
