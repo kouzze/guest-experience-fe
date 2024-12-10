@@ -1,10 +1,11 @@
 import type { MiddlewareNext } from 'astro';
 import { defineMiddleware } from 'astro/middleware';
-import 'dotenv/config';
+import dotenv from 'dotenv';
 import jwt from 'jsonwebtoken';
 
 const privateRoutes = ['/protected'];
 const notAuthRoutes = ['/login', '/register']
+dotenv.config();
 
 export const onRequest = defineMiddleware(async ({ url, redirect, cookies, locals }, next) => {
   let token = cookies.get('token')?.value ?? '';
@@ -26,7 +27,7 @@ export const onRequest = defineMiddleware(async ({ url, redirect, cookies, local
 
 const verifyToken = (token: string, locals: any) => {
   try {
-    const secret = process.env.JWT_SECRET;
+    const secret = process.env.JWT_TOKEN;
     if (!secret) {
       throw new Error('JWT_SECRET no está definida en las variables de entorno');
     }
