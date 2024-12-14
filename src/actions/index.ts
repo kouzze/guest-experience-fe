@@ -1,12 +1,11 @@
 import { registerUser, loginUser, logout } from './auth';
 import { getProperties } from './properties';
+import { postReservation } from './reservation';
 
 export const server = {
-  //actions
-
-  //Auth
   registerUser,
   loginUser,
   logout,
-  getProperties
+  getProperties,
+  postReservation
 }

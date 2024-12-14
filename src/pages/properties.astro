@@ -3,6 +3,8 @@ import type { PropertyList } from '@interfaces/properties.interfaces';
 import Layout from 'src/layouts/Layout.astro';
 
 let properties: PropertyList[] = [];
+const userId = Astro.cookies.get('userId')?.value ?? '';
+const token = Astro.cookies.get('token')?.value ?? '';
 
 const url = process.env.API_GET_PROPERTIES ?? '';
 
@@ -16,33 +18,98 @@ try {
   console.error('Error fetching properties:', error);
 }
 
-console.log(properties);
-
 const title = 'Propiedades | Home';
 ---
 
 <Layout title={title}>
-  <h1 class="text-3xl">Listado de Propiedades</h1>
+  <h1 class="text-3xl text-center">Listado de Propiedades</h1>
 
-  <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
+  <div
+    id="properties-container"
+    class="flex flex-wrap -mx-4"
+    data-properties={JSON.stringify(properties)}
+  >
     {
       properties.map((property) => (
-        <div class="bg-white rounded-lg shadow-md p-6">
-          <h2 class="text-xl font-bold mb-2">{property.name}</h2>
-          <p class="text-gray-700 mb-4">{property.description}</p>
-          <p class="text-gray-700 mb-2">Capacidad: {property.capacity}</p>
-          <p class="text-gray-700">Estado: {property.status}</p>
-          <div class="mt-4">
-            {property.fotos.map((foto) => (
-              <img
-                src={foto.url}
-                alt={foto.description}
-                class="w-full h-48 object-cover mb-2 rounded-md"
-              />
-            ))}
+        property.status === 'disponible' && (
+          <div class="w-full md:w-1/2 lg:w-1/3 px-4 mb-8 mt-8">
+            <div class="bg-white rounded-lg shadow-md p-6 flex flex-col justify-between h-full">
+              <div>
+                <h2 class="text-xl font-bold mb-2">{property.name}</h2>
+                <p
+                  class="text-gray-700 mb-4 line-clamp-3"
+                  style="overflow-wrap: break-word;"
+                >
+                  {property.description}
+                </p>
+                <p class="text-gray-700 mb-2">Capacidad: {property.capacity}</p>
+                <p class="text-gray-700">Estado: {property.status}</p>
+              </div>
+              <div class="mt-4">
+                {property.fotos.map((foto) => (
+                  <img
+                    src={foto.url}
+                    alt={foto.description}
+                    class="w-full h-48 object-cover mb-2 rounded-md"
+                    style="height: 200px; width: 100%; object-fit: cover;"
+                  />
+                ))}
+              </div>
+              <button
+                type="button"
+                data-id={property.id}
+                data-status={property.status}
+                data-price={property.price_per_night}
+                data-user={userId}
+                data-token={token}
+                class="w-full py-2 px-4 bg-indigo-600 text-white font-semibold rounded-md shadow-md hover:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:ring-offset-2 mt-4"
+              >
+                Reservar
+              </button>
+            </div>
           </div>
-        </div>
+        )
       ))
     }
   </div>
 </Layout>
+
+<script>
+  import { actions } from 'astro:actions';
+
+  const dataDiv = document.querySelector('#properties-container');
+
+  dataDiv?.addEventListener('click', async (e) => {
+    const target = e.target as HTMLElement;
+    if (target.tagName === 'BUTTON' && target.dataset.id) {
+      const propertyId = target.dataset.id;
+      const propertyStatus = target.dataset.status;
+      const propertyPrice = target.dataset.price;
+      const propertyUser = target.dataset.user;
+      const propertyToken = target.dataset.token;
+
+      target.setAttribute('disabled', 'disabled');
+
+      const { error } = await actions.postReservation({
+        propertyId,
+        userId: propertyUser,
+        reservationDetails: {
+          status: propertyStatus,
+          price: propertyPrice,
+        },
+        token: propertyToken,
+      });
+
+      if (error) {
+        console.log(error);
+        dataDiv.removeAttribute('disabled');
+      }
+
+      window.location.href = '/properties';
+
+      setTimeout(() => {
+        target.removeAttribute('disabled');
+      }, 2000);
+    }
+  });
+</script>
