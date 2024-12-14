@@ -16,7 +16,6 @@ export const getProperties = defineAction({
       }
 
       const data = await response.json();
-      console.log("data", data);
     } catch (error) {
       console.error("Error al obtener las reservas:", error);
       throw error;
