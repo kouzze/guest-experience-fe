@@ -1,0 +1,52 @@
+---
+import FeatureCard from './FeatureCard.astro';
+
+const features = [
+  {
+    title: "Incrementa tu Rentabilidad",
+    description: "Crea ofertas y paquetes para incrementar tu conversión en canales de venta clave.",
+    icon: "/icons/money.svg"
+  },
+  {
+    title: "Gestión ágil y mayor alcance",
+    description: "Incrementar la disponibilidad en los principales canales de venta y tener más reservas con una gestión sencilla y ágil.",
+    icon: "/icons/chart.svg"
+  },
+  {
+    title: "Pagos en línea seguros",
+    description: "Definir reglas de validación y recepción automáticas.",
+    icon: "/icons/shield.svg"
+  },
+  {
+    title: "Integración con PMS",
+    description: "Obtenga eficiencia y productividad integrando el Channel Manager al PMS de su hotel.",
+    icon: "/icons/integration.svg"
+  },
+  {
+    title: "Evite errores manuales y overbookings",
+    description: "Obtenga eficiencia gestionando sus ventas de forma centralizada.",
+    icon: "/icons/error.svg"
+  },
+  {
+    title: "Tarifas Centralizadas",
+    description: "Maximice su ocupación publicitando en múltiples canales de venta a través de un sistema centralizado.",
+    icon: "/icons/money-search.svg"
+  },
+  {
+    title: "Aumente la exposición en línea",
+    description: "Con una interfaz intuitiva y fácil de administrar, agregue nuevos canales a los planes de tarifas y diversifique su alcance.",
+    icon: "/icons/globe.svg"
+  },
+  {
+    title: "Eficiencia y control",
+    description: "Analice informes de producción, reservas y mantenga el inventario actualizado en tiempo real.",
+    icon: "/icons/settings.svg"
+  }
+];
+---
+
+<div class="grid grid-cols-1 md:grid-cols-2 gap-6 max-w-7xl mx-auto">
+  {features.map(feature => (
+    <FeatureCard {...feature} />
+  ))}
+</div>
