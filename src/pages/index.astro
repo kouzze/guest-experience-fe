@@ -1,50 +1,19 @@
 ---
-import { PropertyCard } from '../components/PropertyCard';
+import Hero from '@components/Hero.astro';
+import FeatureGrid from '@components/FeatureGrid.astro';
+import CategoryButton from '@components/CategoryButton.astro';
 import Layout from '../layouts/Layout.astro';
-
-const featuredProperties = [
-  {
-    title: 'Casa de playa en Cancún',
-    description: 'Hermosa casa frente al mar con acceso directo a la playa',
-    price: 150,
-    image:
-      'https://cdn.uc.assets.prezly.com/9ebf2f2b-3c39-4bb5-b59b-ec2db63ef2d8/-/preview/1500x1000/-/format/auto/Rooftop%20CDLP%2001.png',
-  },
-  {
-    title: 'Apartamento en el centro de Madrid',
-    description:
-      'Moderno apartamento cerca de todas las atracciones turísticas',
-    price: 100,
-    image:
-      'https://cf.bstatic.com/xdata/images/hotel/max1024x768/424060768.jpg?k=3be6cf07df51cab2dce401cbc7a62be708d6e7429c46653f4c4b0dd762b37b46&o=&hp=1',
-  },
-  {
-    title: 'Cabaña en los Alpes Suizos',
-    description: 'Acogedora cabaña con vistas impresionantes a las montañas',
-    price: 200,
-    image:
-      'https://verplanos.com/wp-content/uploads/2015/05/cabana-asombrosa-006.jpg',
-  },
-];
 ---
 
 <Layout title="Guest Experience - Alquiler de propiedades.">
-  <main>
-    <h1 class="text-[4rem] font-bold leading-none text-center mb-4">
-      Bienvenido a <span
-      class="bg-clip-text text-transparent bg-gradient-to-r from-[#232b2b] via-purple-500 to-pink-500 bg-[400%]"
-      >Guest Experience</span>
-    </h1>
-    <p class="text-center text-[1.5rem] mb-8">
-      Descubre alojamientos únicos y vive experiencias inolvidables
-    </p>
-    <section class="mt-12">
-      <h2 class="text-[2rem] font-bold mb-4 text-center">
-        Propiedades destacadas
-      </h2>
-      <div class="grid grid-cols-[repeat(auto-fit,minmax(300px,1fr))] gap-8">
-        {featuredProperties.map((property) => <PropertyCard {...property} />)}
-      </div>
-    </section>
+  <main class="container mx-auto px-4 py-12">
+    <Hero
+      title="Una solución completa para"
+      subtitle="Gestión de Canales"
+      description="Conecte, configure, integre y administre de manera centralizada cientos de canales de ventas y llegue a más clientes de manera conveniente y en línea."
+    />
+
+    <CategoryButton text="Hoteles" />
+    <FeatureGrid />
   </main>
 </Layout>
