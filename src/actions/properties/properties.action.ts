@@ -15,7 +15,6 @@ export const getProperties = defineAction({
         throw new Error(`Error en la respuesta de la API: ${response.statusText}`);
       }
 
-      const data = await response.json();
     } catch (error) {
       console.error("Error al obtener las reservas:", error);
       throw error;

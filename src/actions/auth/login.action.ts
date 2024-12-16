@@ -33,7 +33,7 @@ export const loginUser = defineAction({
         expires: new Date(Date.now() + 1000 * 60 * 60 * 24 * 365),
         path: '/',
       });
-      cookies.set('email', data.token, {
+      cookies.set('email', data.email, {
         expires: new Date(Date.now() + 1000 * 60 * 60 * 24 * 365),
         path: '/',
       });
